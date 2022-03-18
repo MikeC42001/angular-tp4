@@ -14,7 +14,7 @@ import { PetService } from '../pet.service';
 })
 export class HeroDetailComponent implements OnInit {
   hero: Hero | undefined;
-  pet: Pet | undefined;
+  pets: Pet[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -25,17 +25,17 @@ export class HeroDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getHero();
+    this.getPets();
   }
 
   getHero(): void {
     const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
     this.heroService.getHero(id).subscribe((hero) => (this.hero = hero));
   }
-  /*
-  addPet(): void {
-    const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
-    this.heroService.getHero(id).subscribe((hero) => (this.hero = hero));
-  }*/
+
+  getPets(): void {
+    this.petService.getPets().subscribe((pets) => (this.pets = pets));
+  }
 
   goBack(): void {
     this.location.back();
@@ -43,33 +43,18 @@ export class HeroDetailComponent implements OnInit {
 
   save(): void {
     if (this.hero) {
+      const name = this.hero.pet.name.trim();
+      if (!name) {
+        return;
+      }
+      this.petService.addPet({ name } as Pet).subscribe((pet) => {
+        this.pets.push(pet);
+      });
       this.heroService.updateHero(this.hero).subscribe(() => this.goBack());
     }
   }
 }
-/*
-@Component({
-  selector: 'app-pet-detail',
-  templateUrl: './pet-detail.component.html',
-  styleUrls: ['./pet-detail.component.css'],
-})
-export class PetDetailComponent implements OnInit {
-  pet: Pet | undefined;
 
-  constructor(
-    private route: ActivatedRoute,
-    private petService: PetService,
-    private location: Location
-  ) {}
-
-  ngOnInit(): void {}
-
-  addPet(): void {
-    const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
-    this.petService.getPet(id).subscribe((pet) => (this.pet = pet));
-  }
-}
-*/
 /*
 Copyright Google LLC. All Rights Reserved.
 Use of this source code is governed by an MIT-style license that

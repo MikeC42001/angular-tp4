@@ -1,13 +1,11 @@
 <h2>Top Heroes</h2>
 <div class="heroes-menu">
-  <a *ngFor="let hero of heroes"
-      routerLink="/detail/{{hero.id}}">
-      {{hero.name}}
+  <a *ngFor="let hero of heroes" routerLink="/detail/{{ hero.id }}">
+    Name: {{ hero.name }} Pet: {{ hero.pet.name }}
   </a>
 </div>
 
 <app-hero-search></app-hero-search>
-
 
 <!-- 
 Copyright Google LLC. All Rights Reserved.

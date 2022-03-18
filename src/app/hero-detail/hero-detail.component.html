@@ -4,8 +4,10 @@
   <div>
     <label for="hero-name">Hero name: </label>
     <input id="hero-name" [(ngModel)]="hero.name" placeholder="Hero name" />
-    <!--<label for="pet-name">Pet name: </label>
-    <input id="pet-name" [(ngModel)]="pet.name" placeholder="Pet name" />-->
+  </div>
+  <div>
+    <label for="hero-name">Pet name: </label>
+    <input id="hero-name" [(ngModel)]="hero.pet.name" placeholder="Hero name" />
   </div>
   <button type="button" (click)="goBack()">go back</button>
   <button type="button" (click)="save()">save</button>
